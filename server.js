@@ -208,7 +208,7 @@ app.get('/confirm/:tokenId', function(req,res,next) {
       return res.render("confirm",{ locals: { err: err, token: token } });
     }
 
-    console.log("got the token: "+token)
+    console.log("got the token: ",token)
 
     /**
      * TODO: IF YOU GET TO THIS POINT YOU CAN NOW RESET THE ACCOUNT
