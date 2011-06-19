@@ -201,17 +201,21 @@ app.post('/reset', function(req,res,next) {
  * Confirmation via the email link
  */
 app.get('/confirm/:tokenId', function(req,res,next) {
+  console.log("got a token: "+req.params.tokenId)
 
   tokenRegistry.getToken(req.params.tokenId,function(err,token) {
     if (err) {
       return res.render("confirm",{ locals: { err: err, token: token } });
     }
 
+    console.log("got the token: "+token)
+
     /**
      * TODO: IF YOU GET TO THIS POINT YOU CAN NOW RESET THE ACCOUNT
      * account details are in token.username / token.email
      */
     couch.deleteUser(token,function(isValid) {
+      console.log("back from deleteUser", isValid)
       if(isValid) {
         tokenRegistry.removeToken(req.params.tokenId);
       } else {
