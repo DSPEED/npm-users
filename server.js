@@ -52,6 +52,17 @@ var express = require('express')
   , couch = require('./lib/couch.facade')
   , app = express.createServer()
 
+// fallback vhost to registry
+var proxy = new httpProxy.HttpProxy();
+app.use(function (req, res, next) {
+  if (req.headers.host === "registry.npmjs.org") {
+    proxy.proxyRequest(req, res, { host: "localhost"
+                                 , port: 5984 })
+    return
+  }
+  next()
+})
+
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 // Before router to enable dynamic routing
