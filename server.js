@@ -51,17 +51,34 @@ var express = require('express')
   , sanitize = require('validator').sanitize
   , couch = require('./lib/couch.facade')
   , app = express.createServer()
+  , httpProxy = require("http-proxy")
 
 // fallback vhost to registry
 var proxy = new httpProxy.HttpProxy();
-app.use(function (req, res, next) {
-  if (req.headers.host === "registry.npmjs.org") {
+function proxyFunction (req, res, next) {
+  if (req.headers.host === "registry.npmjs.org" ||
+      req.headers.host === "search.npmjs.org" ) {
     proxy.proxyRequest(req, res, { host: "localhost"
                                  , port: 5984 })
     return
   }
-  next()
-})
+  if (next) return next()
+  res.writeHead(404, {})
+  res.end("not found")
+}
+try {
+  var fs = require("fs")
+  var https = require("https")
+  var options = {
+    key: fs.readFileSync(__dirname+'/keys/server.key'),
+    cert: fs.readFileSync(__dirname+'/keys/server.crt')
+  };
+  https.createServer(options, proxyFunction).listen(443)
+} catch (ex) {
+  console.error("No https: "+ex.message)
+}
+
+app.use(proxyFunction)
 
 app.use(express.bodyParser());
 app.use(express.methodOverride());
