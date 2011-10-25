@@ -57,6 +57,8 @@ var express = require('express')
 var proxy = new httpProxy.HttpProxy();
 function proxyFunction (req, res, next) {
   if (req.headers.host === "registry.npmjs.org" ||
+      req.headers.host === "registry.admin.npmjs.org" ||
+      req.headers.host === "search.admin.npmjs.org" ||
       req.headers.host === "search.npmjs.org" ) {
     proxy.proxyRequest(req, res, { host: "localhost"
                                  , port: 5984 })
