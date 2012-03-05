@@ -18,12 +18,11 @@
     <method_context working_directory="/home/node/npm-users" project="nodep">
       <method_credential user="node" group="node" privileges='basic,net_privaddr' />
       <method_environment>
-        <envvar name="PATH" value="/opt/local/bin" />
         <envvar name="HOME" value="/home/node" />
       </method_environment>
     </method_context>
     <exec_method type="method" name="start"
-      exec="/opt/local/bin/node /home/node/npm-users/server.js"
+      exec="/usr/local/bin/nave use 0.6.12 npm start"
       timeout_seconds="10" />
     <exec_method type="method" name="stop" exec=":kill" timeout_seconds="60" />
     <property_group name="startd" type="framework">
