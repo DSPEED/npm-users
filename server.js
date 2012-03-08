@@ -206,6 +206,7 @@ app.post('/reset', function(req,res,next) {
                         'something on the backend, please try again later.'
             };
             res.render("reset",{ locals: responseData });
+            console.error(req.body.username, req.body.email, err)
           }
         });
 
