@@ -1,15 +1,3 @@
-Initial application skeleton for the NPM registry user reset node app
-(as per conversation here: https://github.com/isaacs/npm/issues/321).
+This is no longer relevant.
 
-* DONE - User enters their username.
-* DONE - Look up that user account.
-* DONE - Mint a token good for 24 hours, and put it in a db (or something) along with the account name
-* DONE - Email the token to the email address.
-* DONE - When presented with a valid token, delete the user account out of the db, and tell them to run npm adduser to re-create it.
-
-How to use
-
-* Clone this repository
-* 'npm link' to get all the dependencies (you do need nodejs and npm!)
-* Copy the "default-config.js" to "config.js" and fill in all the details.
-* node server.js
+See: https://npmjs.org/forgot to reset passwords.
